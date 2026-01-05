@@ -16,16 +16,17 @@ export default function App() {
   const [dragActive, setDragActive] = useState(false);
 
   const fixRTL = (text) =>
-    text
-      .split("\n")
-      .map((line) => {
-        const isArabic = /[\u0600-\u06FF]/.test(line);
-        return isArabic
-          ? line.split(" ").reverse().join(" ")
-          : line; // English stays normal
-      })
-      .join("\n");
+    text.split("\n").map(line => {
+      // If line contains Arabic
+      const hasArabic = /[\u0600-\u06FF]/.test(line);
+      if (!hasArabic) return line;
 
+      return line
+        .split(" ")
+        .map(word => (/[\u0600-\u06FF]/.test(word) ? word : `\u2067${word}\u2069`))
+        .reverse()
+        .join(" ");
+    }).join("\n");
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -90,9 +91,9 @@ export default function App() {
     doc.setFont("NotoNaskhArabic", "normal");
     doc.setFontSize(12);
 
-    const rtlText = fixRTL(resultText);
+    // const rtlText = fixRTL(resultText);
 
-    const lines = doc.splitTextToSize(rtlText, 180);
+    const lines = doc.splitTextToSize(resultText, 180);
 
     let y = 20;
     const lineHeight = 7;
@@ -102,11 +103,12 @@ export default function App() {
         doc.addPage();
         y = 20;
       }
+
       doc.text(line, 195, y, { align: "right" });
       y += lineHeight;
     });
 
-    doc.save("result.pdf");
+    doc.save("new result.pdf");
   };
 
   const generateDOCX = async () => {
