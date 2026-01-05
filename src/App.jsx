@@ -11,15 +11,21 @@ const N8N_WEBHOOK_URL =
 export default function App() {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [resultText, setResultText] = useState("");
+  const [resultText, setResultText] = useState('');
   const [downloadType, setDownloadType] = useState("pdf");
   const [dragActive, setDragActive] = useState(false);
 
   const fixRTL = (text) =>
     text
       .split("\n")
-      .map((line) => line.split(" ").reverse().join(" "))
+      .map((line) => {
+        const isArabic = /[\u0600-\u06FF]/.test(line);
+        return isArabic
+          ? line.split(" ").reverse().join(" ")
+          : line; // English stays normal
+      })
       .join("\n");
+
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -85,6 +91,7 @@ export default function App() {
     doc.setFontSize(12);
 
     const rtlText = fixRTL(resultText);
+
     const lines = doc.splitTextToSize(rtlText, 180);
 
     let y = 20;
@@ -103,19 +110,21 @@ export default function App() {
   };
 
   const generateDOCX = async () => {
-    const paragraphs = resultText.split("\n").map(
-      (line) =>
-        new Paragraph({
-          bidirectional: true,
-          rightToLeft: true,
-          children: [
-            new TextRun({
-              text: line,
-              size: 28,
-            }),
-          ],
-        })
-    );
+    const paragraphs = resultText.split("\n").map((line) => {
+      const isArabic = /[\u0600-\u06FF]/.test(line);
+      const textLine = isArabic ? fixRTL(line) : line;
+
+      return new Paragraph({
+        bidirectional: true,
+        rightToLeft: isArabic,
+        children: [
+          new TextRun({
+            text: textLine,
+            size: 28,
+          }),
+        ],
+      });
+    });
 
     const doc = new Document({
       sections: [{ children: paragraphs }],
@@ -124,6 +133,7 @@ export default function App() {
     const blob = await Packer.toBlob(doc);
     saveAs(blob, "result.docx");
   };
+
 
   const handleDownload = () => {
     if (!resultText) return toast.error("No extraction result available");
