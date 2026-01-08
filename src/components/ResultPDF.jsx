@@ -14,11 +14,11 @@ Font.register({
     family: "Amiri",
     fonts: [
         {
-            src: "https://cdn.jsdelivr.net/npm/@fontsource/amiri@4.5.0/files/amiri-arabic-400-normal.woff",
+            src: "/fonts/Amiri-Regular.ttf",
             fontWeight: "normal"
         },
         {
-            src: "https://cdn.jsdelivr.net/npm/@fontsource/amiri@4.5.0/files/amiri-arabic-700-normal.woff",
+            src: "/fonts/Amiri-Regular.ttf",
             fontWeight: "bold"
         },
     ],
