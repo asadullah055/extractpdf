@@ -1,9 +1,11 @@
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Document, Packer, Paragraph, TextRun } from "docx";
 import { saveAs } from "file-saver";
 import { jsPDF } from "jspdf";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import "./fonts/NotoNaskhArabic";
+import "../public/fonts/NotoNaskhArabic";
+import ResultPDF from "./components/ResultPDF";
 
 const N8N_WEBHOOK_URL =
   "https://nebukanexusai.app.n8n.cloud/webhook/extract-pdf";
@@ -228,12 +230,23 @@ export default function App() {
                 <option value="docx">Download as DOCX</option>
               </select>
 
-              <button
-                onClick={handleDownload}
-                className="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition"
-              >
-                Download
-              </button>
+              {downloadType === "pdf" ? (
+                <PDFDownloadLink
+                  document={<ResultPDF text={resultText} />}
+                  fileName="result.pdf"
+                  className="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition"
+                >
+                  {({ loading }) => (loading ? "Preparing PDF..." : "Download PDF")}
+                </PDFDownloadLink>
+              ) : (
+                <button
+                  onClick={generateDOCX}
+                  className="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition"
+                >
+                  Download DOCX
+                </button>
+              )}
+
             </div>
           </div>
         )}

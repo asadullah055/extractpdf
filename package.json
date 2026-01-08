@@ -10,10 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.3.2",
     "@tailwindcss/vite": "^4.1.18",
     "docx": "^9.5.1",
     "file-saver": "^2.0.5",
     "jspdf": "^3.0.4",
+    "jspdf-autotable": "^5.0.7",
+    "lucide-react": "^0.562.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-hot-toast": "^2.6.0",
