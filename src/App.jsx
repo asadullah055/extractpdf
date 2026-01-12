@@ -145,15 +145,15 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-tl from-green-500 from-0% via-emerald-300 via-50% to-green-400 to-100% flex items-center justify-center px-4">
+    <div className="min-h-screen background-gradient flex items-center justify-center px-4">
       <Toaster />
 
       <div className="w-full max-w-3xl bg-white rounded-2xl shadow-xl border border-white/30 p-8">
-        <h1 className="text-3xl font-bold text-emerald-600 text-center mb-2">
+        <h1 className="text-3xl font-bold text-violet-800 text-center mb-2">
           PDF Extraction Portal
         </h1>
 
-        <p className="text-emerald-600 text-center mb-6">
+        <p className="text-blue-600 text-center font-semibold mb-6">
           Upload a PDF — n8n extracts text — download result as PDF or DOCX
         </p>
 
@@ -164,8 +164,8 @@ export default function App() {
           onDrop={handleDrop}
           className={`rounded-xl border-2 border-dashed p-10 text-center transition
           ${dragActive
-              ? "border-emerald-400 bg-white/50"
-              : "border-emerald-600 bg-white"
+              ? "border-blue-400 bg-white/50"
+              : "border-blue-600 bg-white"
             }`}
         >
           <div className="text-slate-700">
@@ -174,7 +174,7 @@ export default function App() {
             <p className="text-sm my-1 text-slate-500">or</p>
 
             <label className="inline-block mt-2">
-              <span className="px-4 py-2 rounded-lg bg-emerald-600 text-white cursor-pointer">
+              <span className="px-4 py-2 font-semibold rounded-lg background-button text-white cursor-pointer">
                 Browse Computer
               </span>
               <input
@@ -193,7 +193,7 @@ export default function App() {
             </label>
 
             {file && (
-              <p className="mt-3 text-emerald-700 text-sm">
+              <p className="mt-3 text-violet-700 text-sm">
                 {file.name}
               </p>
             )}
@@ -206,7 +206,7 @@ export default function App() {
           className={`mt-5 w-full py-3 rounded-lg font-semibold text-white transition
             ${!file || loading
               ? "bg-slate-500 cursor-not-allowed"
-              : "bg-emerald-600 hover:bg-emerald-700"
+              : "background-button"
             }`}
         >
           {loading ? "Processing..." : "Upload & Extract"}
@@ -234,14 +234,14 @@ export default function App() {
                 <PDFDownloadLink
                   document={<ResultPDF text={resultText} />}
                   fileName="memo.pdf"
-                  className="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition"
+                  className="px-5 py-2 rounded-lg background-button text-white font-semibold transition"
                 >
                   {({ loading }) => (loading ? "Preparing PDF..." : "Download PDF")}
                 </PDFDownloadLink>
               ) : (
                 <button
                   onClick={generateDOCX}
-                  className="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition"
+                  className="px-5 py-2 rounded-lg background-button text-white font-semibold transition"
                 >
                   Download DOCX
                 </button>

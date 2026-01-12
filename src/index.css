@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+.background-gradient {
+  @apply bg-gradient-to-r from-violet-800 to-blue-400;
+}
+.background-button {
+  @apply bg-gradient-to-r from-violet-800 to-blue-400  hover:from-violet-900 hover:to-blue-500 cursor-pointer;
+}
