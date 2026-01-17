@@ -78,12 +78,18 @@ const styles = StyleSheet.create({
         padding: 30,
         fontFamily: "Amiri",
         direction: "rtl",
-        backgroundColor: "#F9FAFB",
+        position: "relative",
+    },
+
+    // ✅ content container so text stays above gradient background
+    content: {
+        position: "relative",
+        zIndex: 2,
     },
 
     /* MAIN TITLE */
     titleBox: {
-        backgroundColor: "#047857",
+        backgroundColor: "#7c3aed",
         padding: 12,
         borderRadius: 6,
         marginBottom: 10,
@@ -101,9 +107,9 @@ const styles = StyleSheet.create({
     },
 
     headingBox: {
-        backgroundColor: "#ECFDF5",
+        backgroundColor: "#e7f0fe",
         borderRightWidth: 4,
-        borderRightColor: "#047857",
+        borderRightColor: "#7c3aed",
         paddingVertical: 6,
         paddingHorizontal: 10,
         marginBottom: 6,
@@ -111,7 +117,7 @@ const styles = StyleSheet.create({
     heading: {
         fontSize: 14,
         fontWeight: "bold",
-        color: "#065F46",
+        color: "#7c3aed",
         textAlign: "right",
     },
 
@@ -123,22 +129,9 @@ const styles = StyleSheet.create({
         textAlign: "right",
     },
 
-    boldText: {
-        fontSize: 12,
-        fontWeight: "bold",
-        color: "#111827",
-        textAlign: "right",
-        marginBottom: 2,
-    },
-
     ltrText: {
         direction: "ltr",
         textAlign: "left",
-    },
-
-    bullet: {
-        marginBottom: 5,
-        paddingRight: 10,
     },
 
     bulletRow: {
@@ -179,9 +172,9 @@ const styles = StyleSheet.create({
 
     /* CONTACT SECTION */
     contactTitleBox: {
-        backgroundColor: "#ECFDF5",
+        backgroundColor: "#e7f0fe",
         borderRightWidth: 4,
-        borderRightColor: "#047857",
+        borderRightColor: "#7c3aed",
         padding: 8,
         marginTop: 10,
         marginBottom: 6,
@@ -189,7 +182,7 @@ const styles = StyleSheet.create({
     contactTitle: {
         fontSize: 14,
         fontWeight: "bold",
-        color: "#065F46",
+        color: "#7c3aed",
         textAlign: "right",
     },
 
@@ -204,7 +197,6 @@ const styles = StyleSheet.create({
         flexDirection: "row-reverse",
         borderBottomWidth: 1,
         borderBottomColor: "#D1D5DB",
-
     },
     rowLast: {
         borderBottomWidth: 0,
@@ -215,13 +207,13 @@ const styles = StyleSheet.create({
     cellHeader: {
         flex: 1,
         padding: 8,
-        fontSize: 11,
+        fontSize: 12,
         fontWeight: "bold",
-        backgroundColor: "#E5E7EB",
+        backgroundColor: "#7c3aed",
         borderLeftWidth: 1,
         borderLeftColor: "#D1D5DB",
         textAlign: "center",
-        color: "#000000",
+        color: "#FFFFFF",
     },
     cellHeaderLast: {
         borderLeftWidth: 0,
@@ -238,9 +230,6 @@ const styles = StyleSheet.create({
     cellLast: {
         borderLeftWidth: 0,
     },
-
-    /* FOOTER */
-
 });
 
 /* ================= CONTACT PARSER ================= */

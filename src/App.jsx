@@ -13,22 +13,26 @@ const N8N_WEBHOOK_URL =
 export default function App() {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [resultText, setResultText] = useState('');
+  const [resultText, setResultText] = useState("");
   const [downloadType, setDownloadType] = useState("pdf");
   const [dragActive, setDragActive] = useState(false);
 
   const fixRTL = (text) =>
-    text.split("\n").map(line => {
-      // If line contains Arabic
-      const hasArabic = /[\u0600-\u06FF]/.test(line);
-      if (!hasArabic) return line;
+    text
+      .split("\n")
+      .map((line) => {
+        const hasArabic = /[\u0600-\u06FF]/.test(line);
+        if (!hasArabic) return line;
 
-      return line
-        .split(" ")
-        .map(word => (/[\u0600-\u06FF]/.test(word) ? word : `\u2067${word}\u2069`))
-        .reverse()
-        .join(" ");
-    }).join("\n");
+        return line
+          .split(" ")
+          .map((word) =>
+            /[\u0600-\u06FF]/.test(word) ? word : `\u2067${word}\u2069`
+          )
+          .reverse()
+          .join(" ");
+      })
+      .join("\n");
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -87,13 +91,10 @@ export default function App() {
     }
   };
 
-
   const generatePDF = () => {
     const doc = new jsPDF("p", "mm", "a4");
     doc.setFont("NotoNaskhArabic", "normal");
     doc.setFontSize(12);
-
-    // const rtlText = fixRTL(resultText);
 
     const lines = doc.splitTextToSize(resultText, 180);
 
@@ -138,23 +139,29 @@ export default function App() {
     saveAs(blob, "result.docx");
   };
 
-
-  const handleDownload = () => {
-    if (!resultText) return toast.error("No extraction result available");
-    downloadType === "pdf" ? generatePDF() : generateDOCX();
-  };
-
   return (
-    <div className="min-h-screen background-gradient flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#313647] flex items-center justify-center px-4">
       <Toaster />
 
       <div className="w-full max-w-3xl bg-white rounded-2xl shadow-xl border border-white/30 p-8">
+
+        {/* ✅ Logo Added Here (Better & Premium look) */}
+        <div className="flex justify-center mb-5">
+          <div className="bg-white p-2 rounded-2xl shadow-md border border-slate-200 flex items-center justify-center">
+            <img
+              src="/logo.jpeg"
+              alt="Logo"
+              className="h-[100px] rounded-2xl object-contain"
+            />
+          </div>
+        </div>
+
         <h1 className="text-3xl font-bold text-violet-800 text-center mb-2">
           PDF Extraction Portal
         </h1>
 
         <p className="text-blue-600 text-center font-semibold mb-6">
-          Upload a PDF — n8n extracts text — download result as PDF or DOCX
+          Upload a PDF — download result as PDF or DOCX
         </p>
 
         <div
@@ -174,7 +181,7 @@ export default function App() {
             <p className="text-sm my-1 text-slate-500">or</p>
 
             <label className="inline-block mt-2">
-              <span className="px-4 py-2 font-semibold rounded-lg background-button text-white cursor-pointer">
+              <span className="px-4 py-2 font-semibold rounded-lg bg-black text-white cursor-pointer">
                 Browse Computer
               </span>
               <input
@@ -193,9 +200,7 @@ export default function App() {
             </label>
 
             {file && (
-              <p className="mt-3 text-violet-700 text-sm">
-                {file.name}
-              </p>
+              <p className="mt-3 text-violet-700 text-sm">{file.name}</p>
             )}
           </div>
         </div>
@@ -206,7 +211,7 @@ export default function App() {
           className={`mt-5 w-full py-3 rounded-lg font-semibold text-white transition
             ${!file || loading
               ? "bg-slate-500 cursor-not-allowed"
-              : "background-button"
+              : "px-6 py-3 rounded-2xl text-white font-semibold text-lg bg-[radial-gradient(circle_at_30%_30%,#3b82f6,#8b5cf6,#7c3aed)] hover:brightness-110 transition duration-300 shadow-lg"
             }`}
         >
           {loading ? "Processing..." : "Upload & Extract"}
@@ -236,17 +241,18 @@ export default function App() {
                   fileName="memo.pdf"
                   className="px-5 py-2 rounded-lg background-button text-white font-semibold transition"
                 >
-                  {({ loading }) => (loading ? "Preparing PDF..." : "Download PDF")}
+                  {({ loading }) =>
+                    loading ? "Preparing PDF..." : "Download PDF"
+                  }
                 </PDFDownloadLink>
               ) : (
                 <button
-                  onClick={generateDOCX}
+                  onClick={() => generateDOCX()}
                   className="px-5 py-2 rounded-lg background-button text-white font-semibold transition"
                 >
                   Download DOCX
                 </button>
               )}
-
             </div>
           </div>
         )}
